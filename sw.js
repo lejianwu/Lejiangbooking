@@ -1,4 +1,4 @@
-const CACHE = 'lejiawu-v1';
+const CACHE = 'lejiawu-v2';
 // 自動抓取 base 路徑，相容 GitHub Pages 子目錄
 const BASE = self.registration.scope;
 const ASSETS = [
