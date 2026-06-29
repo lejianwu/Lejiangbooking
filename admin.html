@@ -231,6 +231,73 @@
   .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(100px); background: #333; color: #fff; padding: 10px 20px; border-radius: 20px; font-size: .9rem; transition: transform .3s; z-index: 400; }
   .toast.show { transform: translateX(-50%) translateY(0); }
 
+  /* ── 登入畫面 ── */
+  .login-screen {
+    position: fixed; inset: 0; background: linear-gradient(160deg,#1b5e20,#2e7d32,#43a047);
+    display: flex; align-items: center; justify-content: center; z-index: 500; padding: 20px;
+  }
+  .login-screen.hidden { display: none; }
+  .login-box {
+    background: #fff; border-radius: 20px; padding: 36px 32px;
+    width: 100%; max-width: 360px; box-shadow: 0 12px 40px rgba(0,0,0,.25);
+  }
+  .login-logo { text-align: center; margin-bottom: 24px; }
+  .login-logo .logo-title { font-size: 1.3rem; font-weight: 800; color: var(--green); margin-top: 10px; }
+  .login-logo .logo-sub { font-size: .85rem; color: var(--text-sub); margin-top: 4px; }
+  .login-field { margin-bottom: 14px; }
+  .login-field label { display: block; font-size: .82rem; font-weight: 600; color: var(--text-sub); margin-bottom: 5px; }
+  .login-field input {
+    width: 100%; border: 1.5px solid var(--border); border-radius: 10px;
+    padding: 11px 14px; font-size: .95rem; outline: none; transition: border .2s;
+  }
+  .login-field input:focus { border-color: var(--green-light); }
+  .login-btn {
+    width: 100%; background: var(--green); color: #fff; border: none;
+    border-radius: 10px; padding: 13px; font-size: 1rem; font-weight: 700;
+    cursor: pointer; margin-top: 6px; transition: background .2s;
+  }
+  .login-btn:hover { background: var(--green-light); }
+  .login-error { color: var(--orange); font-size: .85rem; text-align: center; margin-top: 10px; min-height: 20px; }
+
+  /* ── 商品管理 ── */
+  .product-view { padding: 12px; max-width: 900px; margin: 0 auto; display: none; }
+  .product-view.show { display: block; }
+  .product-toolbar {
+    display: flex; justify-content: space-between; align-items: center;
+    background: #fff; border-radius: 12px; padding: 12px 16px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.06); margin-bottom: 14px; gap: 10px;
+  }
+  .product-toolbar h3 { font-size: 1rem; font-weight: 700; color: var(--green); }
+  .add-product-btn {
+    background: var(--green); color: #fff; border: none; border-radius: 8px;
+    padding: 8px 16px; font-size: .88rem; font-weight: 700; cursor: pointer;
+  }
+  .product-table-wrap { background: #fff; border-radius: 12px; box-shadow: 0 1px 4px rgba(0,0,0,.06); overflow: hidden; }
+  .product-table { width: 100%; border-collapse: collapse; font-size: .88rem; }
+  .product-table th { background: var(--gray); padding: 10px 14px; text-align: left; font-weight: 700; color: var(--text-sub); font-size: .78rem; border-bottom: 1px solid var(--border); }
+  .product-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+  .product-table tr:last-child td { border-bottom: none; }
+  .product-table tr:hover td { background: #fafff9; }
+  .prod-edit-btn { background: var(--blue-bg); color: var(--blue); border: none; border-radius: 6px; padding: 4px 10px; font-size: .78rem; font-weight: 600; cursor: pointer; margin-right: 4px; }
+  .prod-del-btn { background: #ffebee; color: var(--red); border: none; border-radius: 6px; padding: 4px 10px; font-size: .78rem; font-weight: 600; cursor: pointer; }
+  .product-modal .modal-body { display: flex; flex-direction: column; gap: 12px; }
+  .form-row { display: flex; flex-direction: column; gap: 4px; }
+  .form-row label { font-size: .82rem; font-weight: 600; color: var(--text-sub); }
+  .form-row input, .form-row select {
+    border: 1.5px solid var(--border); border-radius: 8px;
+    padding: 9px 12px; font-size: .92rem; outline: none;
+  }
+  .form-row input:focus, .form-row select:focus { border-color: var(--green-light); }
+  .modal-footer { padding: 14px 20px; border-top: 1px solid var(--border); display: flex; gap: 10px; justify-content: flex-end; }
+  .btn-cancel { background: var(--gray); color: var(--text); border: none; border-radius: 8px; padding: 9px 18px; font-size: .9rem; cursor: pointer; }
+  .btn-save { background: var(--green); color: #fff; border: none; border-radius: 8px; padding: 9px 18px; font-size: .9rem; font-weight: 700; cursor: pointer; }
+
+  @media (max-width: 600px) {
+    .login-box { padding: 28px 20px; }
+    .product-view { padding: 8px; }
+    .product-table th, .product-table td { padding: 8px 10px; font-size: .8rem; }
+  }
+
   /* ── 手機版響應式 ── */
   @media (max-width: 600px) {
     header { padding: 10px 14px; }
@@ -271,14 +338,45 @@
 </head>
 <body>
 
+<!-- 登入畫面 -->
+<div class="login-screen" id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">
+      <svg width="64" height="54" viewBox="0 0 120 100" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="5" width="110" height="84" rx="22" fill="white" stroke="#1a1a1a" stroke-width="7.5"/>
+        <rect x="17" y="17" width="33" height="33" rx="8" fill="#E8771A"/>
+        <rect x="63" y="13" width="14" height="55" rx="6" fill="#1a1a1a"/>
+        <rect x="85" y="13" width="14" height="55" rx="6" fill="#1a1a1a"/>
+        <rect x="13" y="76" width="94" height="8" rx="4" fill="#1a1a1a"/>
+      </svg>
+      <div class="logo-title">樂健屋 後台管理</div>
+      <div class="logo-sub">請輸入帳號密碼登入</div>
+    </div>
+    <div class="login-field">
+      <label>帳號</label>
+      <input type="text" id="adminAccount" placeholder="請輸入帳號" autocomplete="username">
+    </div>
+    <div class="login-field">
+      <label>密碼</label>
+      <input type="password" id="adminPassword" placeholder="請輸入密碼" autocomplete="current-password"
+        onkeydown="if(event.key==='Enter')doAdminLogin()">
+    </div>
+    <button class="login-btn" onclick="doAdminLogin()">登入</button>
+    <div class="login-error" id="loginError"></div>
+  </div>
+</div>
+
 <header>
   <div class="logo">
     🌿 樂健屋 後台
-    <span>訂單管理系統</span>
+    <span id="adminNameTag">訂單管理系統</span>
   </div>
-  <button class="refresh-btn" onclick="loadOrders()">
-    <span class="spin">🔄</span> 重新整理
-  </button>
+  <div style="display:flex;gap:8px;align-items:center">
+    <button class="refresh-btn" onclick="loadOrders()" id="refreshBtn">
+      <span class="spin">🔄</span> 重新整理
+    </button>
+    <button class="refresh-btn" onclick="doLogout()" style="background:rgba(255,255,255,.1)">登出</button>
+  </div>
 </header>
 
 <!-- Setup Banner -->
@@ -302,6 +400,7 @@
   <button class="filter-tab" data-filter="已出貨" onclick="setFilter('已出貨',this)">🚚 已出貨</button>
   <button class="filter-tab" data-filter="已取消" onclick="setFilter('已取消',this)">✕ 已取消</button>
   <button class="filter-tab" data-filter="__stats__" onclick="setFilter('__stats__',this)">📊 月度統計</button>
+  <button class="filter-tab admin-only" id="tabProducts" data-filter="__products__" onclick="setFilter('__products__',this)" style="display:none">🛍️ 商品管理</button>
 </div>
 
 <!-- Stats View -->
@@ -321,6 +420,53 @@
 <!-- Orders -->
 <div class="orders-container" id="ordersContainer">
   <div class="empty-state"><div class="emoji">📋</div><div>載入中…</div></div>
+</div>
+
+<!-- 商品管理 -->
+<div class="product-view" id="productView">
+  <div class="product-toolbar">
+    <h3>🛍️ 商品管理</h3>
+    <button class="add-product-btn" onclick="openProductModal()">＋ 新增品項</button>
+  </div>
+  <div class="product-table-wrap">
+    <table class="product-table">
+      <thead><tr><th>類別</th><th>品名</th><th>單位</th><th>售價</th><th>操作</th></tr></thead>
+      <tbody id="productTableBody"><tr><td colspan="5" style="text-align:center;padding:30px;color:#999">載入中…</td></tr></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- 商品編輯 Modal -->
+<div class="modal-overlay" id="productModal">
+  <div class="modal product-modal" style="max-width:420px">
+    <div class="modal-header">
+      <h2 id="productModalTitle">新增品項</h2>
+      <button class="close-btn" onclick="closeProductModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="editRowIndex">
+      <div class="form-row">
+        <label>類別</label>
+        <input type="text" id="editCategory" placeholder="例：雞肉類、豬肉類">
+      </div>
+      <div class="form-row">
+        <label>品名 *</label>
+        <input type="text" id="editName" placeholder="例：清肉丁">
+      </div>
+      <div class="form-row">
+        <label>單位 *</label>
+        <input type="text" id="editUnit" placeholder="例：18公斤/件、瓶">
+      </div>
+      <div class="form-row">
+        <label>售價（每單位）*</label>
+        <input type="number" id="editPrice" placeholder="例：2400">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeProductModal()">取消</button>
+      <button class="btn-save" onclick="saveProduct()">儲存</button>
+    </div>
+  </div>
 </div>
 
 <!-- Loading -->
@@ -348,63 +494,137 @@
           <p>在試算表中點選「擴充功能 → Apps Script」，刪除原有程式碼，貼上以下程式碼，並把第一行的 <code>YOUR_SPREADSHEET_ID</code> 換成你的試算表 ID。</p>
           <button class="copy-code-btn" onclick="copyScript()">📋 複製程式碼</button>
           <div class="code-block" id="scriptCode">const SPREADSHEET_ID = 'YOUR_SPREADSHEET_ID';
-const SHEET_NAME = '訂單記錄';
+const ORDER_SHEET   = '訂單記錄';
+const ACCOUNT_SHEET = '帳號管理';
+const PRODUCT_SHEET = '商品管理';
+
+function jsonOut(obj){
+  return ContentService.createTextOutput(JSON.stringify(obj))
+    .setMimeType(ContentService.MimeType.JSON);
+}
 
 function doPost(e) {
   try {
     const data = JSON.parse(e.postData.contents);
     const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
-    let sheet = ss.getSheetByName(SHEET_NAME);
+
+    // ── 商品管理 CRUD ──
+    if (data.action === 'addProduct') {
+      const s = ss.getSheetByName(PRODUCT_SHEET);
+      s.appendRow([data.category||'', data.name, data.unit, Number(data.price)||0]);
+      return jsonOut({success:true});
+    }
+    if (data.action === 'updateProduct') {
+      const s = ss.getSheetByName(PRODUCT_SHEET);
+      const r = parseInt(data.row);
+      s.getRange(r,1).setValue(data.category||'');
+      s.getRange(r,2).setValue(data.name);
+      s.getRange(r,3).setValue(data.unit);
+      s.getRange(r,4).setValue(Number(data.price)||0);
+      return jsonOut({success:true});
+    }
+    if (data.action === 'deleteProduct') {
+      ss.getSheetByName(PRODUCT_SHEET).deleteRow(parseInt(data.row));
+      return jsonOut({success:true});
+    }
+
+    // ── 訂單寫入 ──
+    let sheet = ss.getSheetByName(ORDER_SHEET);
     if (!sheet) {
-      sheet = ss.insertSheet(SHEET_NAME);
+      sheet = ss.insertSheet(ORDER_SHEET);
       sheet.appendRow(['訂單編號','下單時間','門市名稱','聯絡人','送貨日期','品項數','品項明細','備註','狀態','最後更新']);
       sheet.setFrozenRows(1);
-      sheet.getRange(1,1,1,10).setFontWeight('bold')
-        .setBackground('#2e7d32').setFontColor('#ffffff');
+      sheet.getRange(1,1,1,10).setFontWeight('bold').setBackground('#2e7d32').setFontColor('#ffffff');
     }
     const orderId = 'ORD-' + new Date().getTime();
-    const itemDetail = data.items.map(i => i.name+' × '+i.qty+i.unit).join(' | ');
+    const itemDetail = data.items.map(i => i.name+' x '+i.qty+i.unit).join(' | ');
     const now = new Date();
     const fmt = d => Utilities.formatDate(d,'Asia/Taipei','yyyy/MM/dd HH:mm:ss');
     sheet.appendRow([orderId,fmt(now),data.store,data.contact||'',
-      data.deliverDate||'',data.items.length+'項',itemDetail,
-      data.note||'','待確認',fmt(now)]);
+      data.deliverDate||'',data.items.length+'項',itemDetail,data.note||'','待確認',fmt(now)]);
     sheet.autoResizeColumns(1,10);
-    return ContentService
-      .createTextOutput(JSON.stringify({success:true,orderId}))
-      .setMimeType(ContentService.MimeType.JSON);
+    return jsonOut({success:true, orderId});
   } catch(err) {
-    return ContentService
-      .createTextOutput(JSON.stringify({success:false,error:err.toString()}))
-      .setMimeType(ContentService.MimeType.JSON);
+    return jsonOut({success:false, error:err.toString()});
   }
 }
 
 function doGet(e) {
   const action = e.parameter.action || 'list';
   const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
-  const sheet = ss.getSheetByName(SHEET_NAME);
+
+  // ── 加盟主登入 ──
+  if (action === 'login') {
+    const s = ss.getSheetByName(ACCOUNT_SHEET);
+    if (!s) return jsonOut({success:false});
+    const vals = s.getDataRange().getValues();
+    for (let i=1;i<vals.length;i++) {
+      if (String(vals[i][0])===e.parameter.account && String(vals[i][1])===e.parameter.password) {
+        return jsonOut({success:true, store:vals[i][2]||vals[i][0]});
+      }
+    }
+    return jsonOut({success:false});
+  }
+
+  // ── 後台管理員 / 出貨人員登入 ──
+  if (action === 'adminLogin') {
+    const s = ss.getSheetByName(ACCOUNT_SHEET);
+    if (!s) return jsonOut({success:false, error:'找不到帳號表'});
+    const vals = s.getDataRange().getValues();
+    for (let i=1;i<vals.length;i++) {
+      if (String(vals[i][0])===e.parameter.account && String(vals[i][1])===e.parameter.password) {
+        const role = String(vals[i][3]||'');
+        if (role==='管理員'||role==='出貨') {
+          return jsonOut({success:true, role:role, name:String(vals[i][2]||vals[i][0])});
+        }
+        return jsonOut({success:false, error:'此帳號無後台權限'});
+      }
+    }
+    return jsonOut({success:false, error:'帳號或密碼錯誤'});
+  }
+
+  // ── 取得商品（加盟主叫貨用）──
+  if (action === 'getProducts') {
+    const s = ss.getSheetByName(PRODUCT_SHEET);
+    if (!s||s.getLastRow()<=1) return jsonOut({products:[]});
+    const vals = s.getDataRange().getValues();
+    const products = vals.slice(1).map((r,i)=>({
+      id:'P'+(i+2), rowIndex:i+2,
+      category:r[0]||'', name:r[1]||'', unit:r[2]||'', price:r[3]||0
+    })).filter(p=>p.name);
+    return jsonOut({products});
+  }
+
+  // ── 取得商品列表（管理員 CRUD 用）──
+  if (action === 'getProductList') {
+    const s = ss.getSheetByName(PRODUCT_SHEET);
+    if (!s||s.getLastRow()<=1) return jsonOut({products:[]});
+    const vals = s.getDataRange().getValues();
+    const products = vals.slice(1).map((r,i)=>({
+      rowIndex:i+2, category:r[0]||'', name:r[1]||'', unit:r[2]||'', price:r[3]||0
+    })).filter(p=>p.name);
+    return jsonOut({products});
+  }
+
+  // ── 更新訂單狀態 ──
+  const sheet = ss.getSheetByName(ORDER_SHEET);
   if (action === 'updateStatus') {
     const row = parseInt(e.parameter.row);
     sheet.getRange(row,9).setValue(e.parameter.status);
     sheet.getRange(row,10).setValue(
       Utilities.formatDate(new Date(),'Asia/Taipei','yyyy/MM/dd HH:mm:ss'));
-    return ContentService
-      .createTextOutput(JSON.stringify({success:true}))
-      .setMimeType(ContentService.MimeType.JSON);
+    return jsonOut({success:true});
   }
-  if (!sheet || sheet.getLastRow() <= 1)
-    return ContentService.createTextOutput(JSON.stringify({orders:[]}))
-      .setMimeType(ContentService.MimeType.JSON);
+
+  // ── 取得所有訂單 ──
+  if (!sheet||sheet.getLastRow()<=1) return jsonOut({orders:[]});
   const vals = sheet.getDataRange().getValues();
-  const orders = vals.slice(1).map((r,i) => ({
+  const orders = vals.slice(1).map((r,i)=>({
     rowIndex:i+2, orderId:r[0], time:r[1].toString(), store:r[2],
     contact:r[3], deliverDate:r[4], itemCount:r[5],
     items:r[6], note:r[7], status:r[8], lastUpdate:r[9].toString()
   })).reverse();
-  return ContentService
-    .createTextOutput(JSON.stringify({orders}))
-    .setMimeType(ContentService.MimeType.JSON);
+  return jsonOut({orders});
 }</div>
         </div>
       </div>
@@ -440,18 +660,63 @@ let SCRIPT_URL = localStorage.getItem('lejiawu_script_url') || DEFAULT_URL;
 let allOrders = [];
 let currentFilter = 'all';
 let autoRefreshTimer = null;
+let adminRole = '';   // '管理員' | '出貨'
+let adminName = '';
 
 // ─── 初始化 ──────────────────────────────────────────────────
 window.onload = () => {
   document.getElementById('scriptUrlInput').value = SCRIPT_URL;
   initMonthSelect();
-  if (!SCRIPT_URL) {
-    document.getElementById('setupBanner').classList.add('show');
-  } else {
-    loadOrders();
-    startAutoRefresh();
+  // 檢查 session 是否已登入
+  const saved = sessionStorage.getItem('lejiawu_admin');
+  if (saved) {
+    const info = JSON.parse(saved);
+    adminRole = info.role;
+    adminName = info.name;
+    showAdminUI();
   }
+  // 否則顯示登入畫面（loginScreen 預設已顯示）
 };
+
+// ─── 登入 ────────────────────────────────────────────────────
+async function doAdminLogin() {
+  const account = document.getElementById('adminAccount').value.trim();
+  const password = document.getElementById('adminPassword').value.trim();
+  const errEl = document.getElementById('loginError');
+  if (!account || !password) { errEl.textContent = '請輸入帳號和密碼'; return; }
+  errEl.textContent = '驗證中…';
+  try {
+    const res = await fetch(`${SCRIPT_URL}?action=adminLogin&account=${encodeURIComponent(account)}&password=${encodeURIComponent(password)}`);
+    const data = await res.json();
+    if (data.success) {
+      adminRole = data.role;
+      adminName = data.name;
+      sessionStorage.setItem('lejiawu_admin', JSON.stringify({role:adminRole, name:adminName}));
+      showAdminUI();
+    } else {
+      errEl.textContent = data.error || '帳號或密碼錯誤';
+    }
+  } catch(e) {
+    errEl.textContent = '連線失敗，請稍後再試';
+  }
+}
+
+function showAdminUI() {
+  document.getElementById('loginScreen').classList.add('hidden');
+  document.getElementById('adminNameTag').textContent = adminName + '（' + adminRole + '）';
+  // 管理員才顯示商品管理 tab
+  if (adminRole === '管理員') {
+    document.getElementById('tabProducts').style.display = '';
+  }
+  loadOrders();
+  startAutoRefresh();
+}
+
+function doLogout() {
+  sessionStorage.removeItem('lejiawu_admin');
+  adminRole = ''; adminName = '';
+  location.reload();
+}
 
 function startAutoRefresh() {
   if (autoRefreshTimer) clearInterval(autoRefreshTimer);
@@ -566,13 +831,17 @@ function setFilter(filter, el) {
   currentFilter = filter;
   document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
   el.classList.add('active');
+  document.getElementById('ordersContainer').style.display = 'none';
+  document.getElementById('statsView').classList.remove('show');
+  document.getElementById('productView').classList.remove('show');
   if (filter === '__stats__') {
-    document.getElementById('ordersContainer').style.display = 'none';
     document.getElementById('statsView').classList.add('show');
     renderMonthStats();
+  } else if (filter === '__products__') {
+    document.getElementById('productView').classList.add('show');
+    loadProducts();
   } else {
     document.getElementById('ordersContainer').style.display = 'block';
-    document.getElementById('statsView').classList.remove('show');
     renderOrders();
   }
 }
@@ -804,6 +1073,95 @@ function showToast(msg) {
   t.textContent = msg;
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ─── 商品管理 ────────────────────────────────────────────────
+let allProducts = [];
+let editingRow = null;
+
+async function loadProducts() {
+  try {
+    const res = await fetch(`${SCRIPT_URL}?action=getProductList`);
+    const data = await res.json();
+    allProducts = data.products || [];
+    renderProducts();
+  } catch(e) {
+    document.getElementById('productTableBody').innerHTML =
+      '<tr><td colspan="5" style="text-align:center;padding:30px;color:#999">載入失敗</td></tr>';
+  }
+}
+
+function renderProducts() {
+  const tbody = document.getElementById('productTableBody');
+  if (!allProducts.length) {
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:30px;color:#999">目前沒有品項</td></tr>';
+    return;
+  }
+  tbody.innerHTML = allProducts.map(p => `
+    <tr>
+      <td style="color:var(--text-sub);font-size:.82rem">${p.category||'—'}</td>
+      <td style="font-weight:600">${p.name}</td>
+      <td>${p.unit}</td>
+      <td>$${Number(p.price).toLocaleString()}</td>
+      <td>
+        <button class="prod-edit-btn" onclick="openProductModal(${p.rowIndex})">✏️ 編輯</button>
+        <button class="prod-del-btn" onclick="deleteProduct(${p.rowIndex},'${p.name}')">🗑️ 刪除</button>
+      </td>
+    </tr>`).join('');
+}
+
+function openProductModal(rowIndex) {
+  editingRow = rowIndex || null;
+  document.getElementById('productModalTitle').textContent = rowIndex ? '編輯品項' : '新增品項';
+  document.getElementById('editRowIndex').value = rowIndex || '';
+  if (rowIndex) {
+    const p = allProducts.find(x => x.rowIndex === rowIndex);
+    if (p) {
+      document.getElementById('editCategory').value = p.category || '';
+      document.getElementById('editName').value = p.name;
+      document.getElementById('editUnit').value = p.unit;
+      document.getElementById('editPrice').value = p.price;
+    }
+  } else {
+    document.getElementById('editCategory').value = '';
+    document.getElementById('editName').value = '';
+    document.getElementById('editUnit').value = '';
+    document.getElementById('editPrice').value = '';
+  }
+  document.getElementById('productModal').classList.add('open');
+}
+
+function closeProductModal() {
+  document.getElementById('productModal').classList.remove('open');
+}
+
+async function saveProduct() {
+  const name = document.getElementById('editName').value.trim();
+  const unit = document.getElementById('editUnit').value.trim();
+  const price = document.getElementById('editPrice').value.trim();
+  if (!name || !unit || !price) { showToast('⚠️ 請填寫品名、單位、售價'); return; }
+  const row = document.getElementById('editRowIndex').value;
+  const payload = {
+    action: row ? 'updateProduct' : 'addProduct',
+    row: row || undefined,
+    category: document.getElementById('editCategory').value.trim(),
+    name, unit, price
+  };
+  try {
+    await fetch(SCRIPT_URL, {method:'POST', body:JSON.stringify(payload)});
+    closeProductModal();
+    showToast(row ? '✅ 品項已更新' : '✅ 品項已新增');
+    loadProducts();
+  } catch(e) { showToast('❌ 儲存失敗'); }
+}
+
+async function deleteProduct(rowIndex, name) {
+  if (!confirm(`確定要刪除「${name}」嗎？`)) return;
+  try {
+    await fetch(SCRIPT_URL, {method:'POST', body:JSON.stringify({action:'deleteProduct', row:rowIndex})});
+    showToast('✅ 已刪除');
+    loadProducts();
+  } catch(e) { showToast('❌ 刪除失敗'); }
 }
 
 // ── PWA Service Worker 註冊 ──
